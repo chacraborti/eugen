@@ -15,6 +15,15 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>LoggerFilter</filter-name> <!-- mandatory -->
+        <filter-class>filters.LoggerFilter</filter-class> <!-- mandatory -->
+        <init-param> <!-- optional -->
+            <param-name>test</param-name>
+            <param-value>testValue</param-value>
+        </init-param>
+    </filter>
+
     <!--<filter>-->
         <!--<filter-name>RequestLoggingFilter</filter-name> &lt;!&ndash; mandatory &ndash;&gt;-->
         <!--<filter-class>com.journaldev.servlet.filters.RequestLoggingFilter</filter-class> &lt;!&ndash; mandatory &ndash;&gt;-->
