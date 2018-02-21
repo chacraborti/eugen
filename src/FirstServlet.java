@@ -31,12 +31,12 @@ public class FirstServlet extends HttpServlet {
     }
 
 
-    private void writeToLog(HttpServletRequest req, HttpServletResponse resp) {
-        getRequestHeadersInfo(req).entrySet().stream().forEach(e -> logger.warning("request header from doGet: " + e.toString()));
-        resp.getHeaderNames().stream().forEach(e -> logger.warning("request header from doGet: " + e.toString()));
-
-        getRequestBodyInfo(req).entrySet().stream().forEach(e -> logger.warning("request body from doGet: " + e.toString()));
-    }
+//    private void writeToLog(HttpServletRequest req, HttpServletResponse resp) {
+//        getRequestHeadersInfo(req).entrySet().stream().forEach(e -> logger.warning("request header from doGet: " + e.toString()));
+//        resp.getHeaderNames().stream().forEach(e -> logger.warning("request header from doGet: " + e.toString()));
+//
+//        getRequestBodyInfo(req).entrySet().stream().forEach(e -> logger.warning("request body from doGet: " + e.toString()));
+//    }
     private Map<String, String> getRequestHeadersInfo(HttpServletRequest request) {
 
         Map<String, String> map = new HashMap<>();

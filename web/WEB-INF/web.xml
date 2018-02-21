@@ -18,26 +18,12 @@
     <filter>
         <filter-name>LoggerFilter</filter-name> <!-- mandatory -->
         <filter-class>filters.LoggerFilter</filter-class> <!-- mandatory -->
-        <init-param> <!-- optional -->
-            <param-name>test</param-name>
-            <param-value>testValue</param-value>
-        </init-param>
     </filter>
 
-    <!--<filter>-->
-        <!--<filter-name>RequestLoggingFilter</filter-name> &lt;!&ndash; mandatory &ndash;&gt;-->
-        <!--<filter-class>com.journaldev.servlet.filters.RequestLoggingFilter</filter-class> &lt;!&ndash; mandatory &ndash;&gt;-->
-        <!--<init-param> &lt;!&ndash; optional &ndash;&gt;-->
-            <!--<param-name>test</param-name>-->
-            <!--<param-value>testValue</param-value>-->
-        <!--</init-param>-->
-    <!--</filter>-->
-
-    <!--<filter-mapping>-->
-        <!--<filter-name>RequestLoggingFilter</filter-name> &lt;!&ndash; mandatory &ndash;&gt;-->
-        <!--<url-pattern>/*</url-pattern> &lt;!&ndash; either url-pattern or servlet-name is mandatory &ndash;&gt;-->
-        <!--<servlet-name>LoginServlet</servlet-name>-->
-        <!--<dispatcher>REQUEST</dispatcher>-->
-    <!--</filter-mapping>-->
+    <filter-mapping>
+        <filter-name>LoggerFilter</filter-name> <!-- mandatory -->
+        <url-pattern>/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
+        <servlet-name>first</servlet-name>
+    </filter-mapping>
 
 </web-app>
