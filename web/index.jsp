@@ -4,11 +4,12 @@
 </head>
 <body>
 <h1>Hi there!</h1>
-<%--<form method="GET" action="controller">--%>
-    <%--<input type="hidden" name="page" value="create_tour">--%>
-    <%--<button class="button" name="command" value="to_go_to">--%>
 
-    <%--</button>--%>
-<%--</form>--%>
+<form action = "main.jsp" method = "POST">
+    First Name: <input type = "text" name = "first_name">
+    <br />
+    Last Name: <input type = "text" name = "last_name" />
+    <input type = "submit" value = "Submit" />
+</form>
 </body>
 </html>
