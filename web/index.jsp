@@ -5,10 +5,12 @@
 <body>
 <h1>Hi there!</h1>
 
-<form action = "main.jsp" method = "POST">
-    First Name: <input type = "text" name = "first_name">
+<form method = "POST">
+    <div>First Name:</div>
+    <input type = "text" name = "first_name">
     <br />
-    Last Name: <input type = "text" name = "last_name" />
+    <div>Last Name:</div>
+    <input type = "text" name = "last_name" />
     <input type = "submit" value = "Submit" />
 </form>
 </body>

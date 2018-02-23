@@ -1,6 +1,4 @@
-package filters;
-
-import com.sun.org.apache.xpath.internal.SourceTree;
+package main.filters;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
