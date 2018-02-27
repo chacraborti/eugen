@@ -5,12 +5,13 @@
 <body>
 <h1>Hi there!</h1>
 
-<form method = "POST">
+<form>
     <div>First Name:</div>
-    <input type = "text" name = "first_name">
+    <input type = "text" name = "first_name"/>
     <br />
     <div>Last Name:</div>
     <input type = "text" name = "last_name" />
+
     <input type = "submit" value = "Submit" />
 </form>
 </body>

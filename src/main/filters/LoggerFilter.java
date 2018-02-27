@@ -9,17 +9,10 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoggerFilter implements Filter {
 
     private static final Logger LOGGER = Logger.getLogger("LOGGER");
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -27,56 +20,48 @@ public class LoggerFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
 
         logRequestHeaders(req);
-        LOGGER.info("Method:\t"+req.getMethod());
         logRequestBody(req);
-        logResponseHeaders(resp);
-        logResponseBody(request, resp, chain);
 
-    }
-
-    private void logResponseBody(ServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        final CopyPrintWriter writer = new CopyPrintWriter(response.getWriter());
-        chain.doFilter(request, new HttpServletResponseWrapper(response) {
+        HttpServletResponseWrapper wrappedResponse = new HttpServletResponseWrapper(resp) {
             @Override
-            public PrintWriter getWriter() {
-                return writer;
+            public PrintWriter getWriter() throws IOException {
+                return new CopyPrintWriter(resp.getWriter());
             }
-        });
-        LOGGER.info("request body" + writer.getCopy());
+        };
+        chain.doFilter(request, wrappedResponse);
+
+        logResponseHeaders(wrappedResponse);
+        logResponseBody(wrappedResponse);
     }
 
     private void logRequestHeaders(HttpServletRequest request) {
+        LOGGER.info("METHOD: " + request.getMethod());
+        Enumeration<String> headerNames = request.getHeaderNames();
 
-        Map<String, String> map = new HashMap<>();
-
-        Enumeration headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
-            String key = (String) headerNames.nextElement();
+            String key = headerNames.nextElement();
             String value = request.getHeader(key);
-            map.put(key, value);
+            LOGGER.info(request.getRemoteAddr() + "REQUEST HEADERS {" + key + "=" + value + "}");
         }
-
-        map.entrySet().stream().forEach(e -> LOGGER.info("request header: " + e.toString()));
     }
 
+    private void logRequestBody(HttpServletRequest request) {
+        Enumeration<String> params = request.getParameterNames();
 
-    private void logRequestBody(HttpServletRequest req) {
-
-        Enumeration<String> params = req.getParameterNames();
         while (params.hasMoreElements()) {
-            String name = params.nextElement();
-            String value = req.getParameter(name);
-            LOGGER.info(req.getRemoteAddr() + "request params: {" + name + "=" + value + "}");
+            String key = params.nextElement();
+            String value = request.getParameter(key);
+            LOGGER.info(request.getRemoteAddr() + "REQUEST PARAMS: {" + key + "=" + value + "}");
         }
     }
 
     private void logResponseHeaders(HttpServletResponse response) {
-
-        response.getHeaderNames().stream().forEach(e -> LOGGER.info("response header: " + e.toString()));
+        response.getHeaderNames()
+                .forEach(e -> LOGGER.info("RESPONSE HEADERS: " + e));
     }
 
-    @Override
-    public void destroy() {
-
+    private void logResponseBody(HttpServletResponse response) throws IOException {
+        String responseBody = ((CopyPrintWriter)response.getWriter()).getCopy();
+        LOGGER.info("RESPONSE BODY: " + responseBody);
     }
 }
