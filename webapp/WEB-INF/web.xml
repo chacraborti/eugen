@@ -7,7 +7,7 @@
     
     <servlet>
         <servlet-name>first</servlet-name>
-        <servlet-class>main.servlet.Servlet</servlet-class>
+        <servlet-class>main.java.servlet.Servlet</servlet-class>
     </servlet>
     
     <servlet-mapping>
@@ -17,7 +17,7 @@
 
     <filter>
         <filter-name>LoggerFilter</filter-name> <!-- mandatory -->
-        <filter-class>main.filters.LoggerFilter</filter-class> <!-- mandatory -->
+        <filter-class>main.java.filters.LoggerFilter</filter-class> <!-- mandatory -->
     </filter>
 
     <filter-mapping>
@@ -28,7 +28,7 @@
 
     <filter>
         <filter-name>VoidFilter</filter-name> <!-- mandatory -->
-        <filter-class>main.filters.VoidFilter</filter-class> <!-- mandatory -->
+        <filter-class>main.java.filters.VoidFilter</filter-class> <!-- mandatory -->
     </filter>
 
     <filter-mapping>

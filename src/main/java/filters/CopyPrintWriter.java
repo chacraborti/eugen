@@ -1,4 +1,4 @@
-package main.filters;
+package main.java.filters;
 
 import java.io.PrintWriter;
 import java.io.Writer;

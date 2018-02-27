@@ -29,6 +29,10 @@
     </build>
     <packaging>war</packaging>
 
+    <properties>
+        <maven.test.skip>true</maven.test.skip>
+    </properties>
+
 <dependencies>
     <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
     <dependency>
