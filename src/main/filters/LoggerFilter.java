@@ -1,5 +1,7 @@
 package main.filters;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,15 +11,14 @@ import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class LoggerFilter implements Filter {
 
-    Logger logger;
+    private static final Logger LOGGER = Logger.getLogger("LOGGER");
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        this.logger = Logger.getLogger("logger");
+
     }
 
     @Override
@@ -26,6 +27,7 @@ public class LoggerFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
 
         logRequestHeaders(req);
+        LOGGER.info("Method:\t"+req.getMethod());
         logRequestBody(req);
         logResponseHeaders(resp);
         logResponseBody(request, resp, chain);
@@ -40,7 +42,7 @@ public class LoggerFilter implements Filter {
                 return writer;
             }
         });
-        logger.warning("request body" + writer.getCopy());
+        LOGGER.info("request body" + writer.getCopy());
     }
 
     private void logRequestHeaders(HttpServletRequest request) {
@@ -54,7 +56,7 @@ public class LoggerFilter implements Filter {
             map.put(key, value);
         }
 
-        map.entrySet().stream().forEach(e -> logger.warning("request header: " + e.toString()));
+        map.entrySet().stream().forEach(e -> LOGGER.info("request header: " + e.toString()));
     }
 
 
@@ -64,13 +66,13 @@ public class LoggerFilter implements Filter {
         while (params.hasMoreElements()) {
             String name = params.nextElement();
             String value = req.getParameter(name);
-            logger.warning(req.getRemoteAddr() + "request params: {" + name + "=" + value + "}");
+            LOGGER.info(req.getRemoteAddr() + "request params: {" + name + "=" + value + "}");
         }
     }
 
     private void logResponseHeaders(HttpServletResponse response) {
 
-        response.getHeaderNames().stream().forEach(e -> logger.warning("response header: " + e.toString()));
+        response.getHeaderNames().stream().forEach(e -> LOGGER.info("response header: " + e.toString()));
     }
 
     @Override

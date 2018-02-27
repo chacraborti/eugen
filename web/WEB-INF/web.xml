@@ -22,7 +22,17 @@
 
     <filter-mapping>
         <filter-name>LoggerFilter</filter-name> <!-- mandatory -->
-        <url-pattern>/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
+        <!--<url-pattern>/*</url-pattern> &lt;!&ndash; either url-pattern or servlet-name is mandatory &ndash;&gt;-->
+        <servlet-name>first</servlet-name>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>VoidFilter</filter-name> <!-- mandatory -->
+        <filter-class>main.filters.VoidFilter</filter-class> <!-- mandatory -->
+    </filter>
+
+    <filter-mapping>
+        <filter-name>VoidFilter</filter-name> <!-- mandatory -->
         <servlet-name>first</servlet-name>
     </filter-mapping>
 
