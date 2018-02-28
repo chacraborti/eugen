@@ -3,36 +3,35 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
-           version="3.1">
-    
+           version="3.0">
+
     <servlet>
         <servlet-name>first</servlet-name>
-        <servlet-class>main.java.servlet.Servlet</servlet-class>
+        <servlet-class>servlet.Servlet</servlet-class>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>first</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <filter>
-        <filter-name>LoggerFilter</filter-name> <!-- mandatory -->
-        <filter-class>main.java.filters.LoggerFilter</filter-class> <!-- mandatory -->
+        <filter-name>LoggerFilter</filter-name>
+        <filter-class>filters.LoggerFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>LoggerFilter</filter-name> <!-- mandatory -->
-        <!--<url-pattern>/*</url-pattern> &lt;!&ndash; either url-pattern or servlet-name is mandatory &ndash;&gt;-->
+        <filter-name>LoggerFilter</filter-name>
         <servlet-name>first</servlet-name>
     </filter-mapping>
 
     <filter>
-        <filter-name>VoidFilter</filter-name> <!-- mandatory -->
-        <filter-class>main.java.filters.VoidFilter</filter-class> <!-- mandatory -->
+        <filter-name>VoidFilter</filter-name>
+        <filter-class>filters.VoidFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>VoidFilter</filter-name> <!-- mandatory -->
+        <filter-name>VoidFilter</filter-name>
         <servlet-name>first</servlet-name>
     </filter-mapping>
 

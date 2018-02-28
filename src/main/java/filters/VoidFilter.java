@@ -1,4 +1,4 @@
-package main.java.filters;
+package filters;
 
 import org.apache.log4j.Logger;
 
@@ -10,7 +10,7 @@ public class VoidFilter implements Filter {
     Logger logger;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         this.logger = Logger.getLogger("logger");
     }
 

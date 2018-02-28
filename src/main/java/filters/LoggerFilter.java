@@ -1,4 +1,4 @@
-package main.java.filters;
+package filters;
 
 import org.apache.log4j.Logger;
 
@@ -18,7 +18,8 @@ public class LoggerFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-
+        LOGGER.info("===================================================================\n" +
+                "=========================================================================================================");
         logRequestHeaders(req);
         logRequestBody(req);
 
@@ -35,29 +36,40 @@ public class LoggerFilter implements Filter {
     }
 
     private void logRequestHeaders(HttpServletRequest request) {
-        LOGGER.info("METHOD: " + request.getMethod());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("REQUEST HEADERS of HTTP method " + request.getMethod() + ":\n");
+
         Enumeration<String> headerNames = request.getHeaderNames();
 
         while (headerNames.hasMoreElements()) {
             String key = headerNames.nextElement();
             String value = request.getHeader(key);
-            LOGGER.info(request.getRemoteAddr() + "REQUEST HEADERS {" + key + "=" + value + "}");
+            stringBuilder.append(key + " = " + value +"\n");
         }
+        LOGGER.info(stringBuilder);
     }
 
     private void logRequestBody(HttpServletRequest request) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("REQUEST BODY of HTTP method " + request.getMethod() + ":\n");
+
         Enumeration<String> params = request.getParameterNames();
 
         while (params.hasMoreElements()) {
             String key = params.nextElement();
             String value = request.getParameter(key);
-            LOGGER.info(request.getRemoteAddr() + "REQUEST PARAMS: {" + key + "=" + value + "}");
+            stringBuilder.append(key + " = " + value + "\n");
         }
+        LOGGER.info(stringBuilder);
     }
 
     private void logResponseHeaders(HttpServletResponse response) {
-        response.getHeaderNames()
-                .forEach(e -> LOGGER.info("RESPONSE HEADERS: " + e));
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("RESPONSE HEADERS:\n");
+
+        response.getHeaderNames().stream().map(s -> s  + " = " + response.getHeader(s) + "\n").forEach(stringBuilder::append);
+
+        LOGGER.info(stringBuilder);
     }
 
     private void logResponseBody(HttpServletResponse response) throws IOException {
