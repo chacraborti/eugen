@@ -22,17 +22,16 @@ public class LoggerFilter implements Filter {
                 "=========================================================================================================");
         logRequestHeaders(req);
         logRequestBody(req);
+        logResponseHeaders(resp);
 
-        HttpServletResponseWrapper wrappedResponse = new HttpServletResponseWrapper(resp) {
+        CopyPrintWriter writer = new CopyPrintWriter(response.getWriter());
+        chain.doFilter(request, new HttpServletResponseWrapper(resp) {
             @Override
-            public PrintWriter getWriter() throws IOException {
-                return new CopyPrintWriter(resp.getWriter());
+            public PrintWriter getWriter() {
+                return writer;
             }
-        };
-        chain.doFilter(request, wrappedResponse);
-
-        logResponseHeaders(wrappedResponse);
-        logResponseBody(wrappedResponse);
+        });
+        lodResponseBody(writer);
     }
 
     private void logRequestHeaders(HttpServletRequest request) {
@@ -72,8 +71,7 @@ public class LoggerFilter implements Filter {
         LOGGER.info(stringBuilder);
     }
 
-    private void logResponseBody(HttpServletResponse response) throws IOException {
-        String responseBody = ((CopyPrintWriter)response.getWriter()).getCopy();
-        LOGGER.info("RESPONSE BODY: " + responseBody);
+    private void lodResponseBody(CopyPrintWriter writer) {
+        LOGGER.info("RESPONSE BODY" + writer.getCopy());
     }
 }

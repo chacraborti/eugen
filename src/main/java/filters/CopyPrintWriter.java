@@ -13,7 +13,7 @@ public class CopyPrintWriter extends PrintWriter {
 
     @Override
     public void write(int c) {
-        copy.append((char) c); // It is actually a char, not an int.
+        copy.append((char) c);
         super.write(c);
     }
 
