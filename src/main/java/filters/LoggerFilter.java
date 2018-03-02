@@ -25,15 +25,15 @@ public class LoggerFilter implements Filter {
         logRequestHeaders(req);
         logRequestBody(req);
 
-//        CopyPrintWriter writer = new CopyPrintWriter(resp.getWriter());
-//        chain.doFilter(req, new HttpServletResponseWrapper(resp) {
-//            @Override
-//            public PrintWriter getWriter() {
-//                return writer;
-//            }
-//        });
-//        logResponseHeaders(resp);
-//        lodResponseBody(writer);
+        CopyPrintWriter writer = new CopyPrintWriter(resp.getWriter());
+        chain.doFilter(req, new HttpServletResponseWrapper(resp) {
+            @Override
+            public PrintWriter getWriter() {
+                return writer;
+            }
+        });
+        logResponseHeaders(resp);
+        logResponseBody(writer);
     }
 
     private void logDelimiter(){
@@ -74,12 +74,13 @@ public class LoggerFilter implements Filter {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("RESPONSE HEADERS:\n");
 
-        response.getHeaderNames().stream().map(s -> s  + " = " + response.getHeader(s) + "\n").forEach(stringBuilder::append);
+        response.getHeaderNames().stream()
+                .forEach(s->stringBuilder.append( s  + " = " + response.getHeader(s) + "\n"));
 
         LOGGER.info(stringBuilder.toString());
     }
 
-    private void lodResponseBody(CopyPrintWriter writer) {
-        LOGGER.info("RESPONSE BODY" + writer.getCopy());
+    private void logResponseBody(CopyPrintWriter writer) {
+        LOGGER.info("RESPONSE BODY: " + writer.getCopy());
     }
 }
